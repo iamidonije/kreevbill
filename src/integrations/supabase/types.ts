@@ -14,7 +14,285 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      items: {
+        Row: {
+          amount: number
+          billing_cycle: string
+          category: string
+          created_at: string
+          currency: string
+          id: string
+          is_demo: boolean
+          is_usd_billed: boolean
+          is_variable: boolean
+          last_paid_at: string | null
+          last_reviewed_at: string | null
+          name: string
+          next_due_date: string | null
+          notes: string | null
+          payment_method_note: string | null
+          status: string
+          topup_every_days: number | null
+          type: string
+          user_id: string
+        }
+        Insert: {
+          amount?: number
+          billing_cycle?: string
+          category?: string
+          created_at?: string
+          currency?: string
+          id?: string
+          is_demo?: boolean
+          is_usd_billed?: boolean
+          is_variable?: boolean
+          last_paid_at?: string | null
+          last_reviewed_at?: string | null
+          name: string
+          next_due_date?: string | null
+          notes?: string | null
+          payment_method_note?: string | null
+          status?: string
+          topup_every_days?: number | null
+          type?: string
+          user_id?: string
+        }
+        Update: {
+          amount?: number
+          billing_cycle?: string
+          category?: string
+          created_at?: string
+          currency?: string
+          id?: string
+          is_demo?: boolean
+          is_usd_billed?: boolean
+          is_variable?: boolean
+          last_paid_at?: string | null
+          last_reviewed_at?: string | null
+          name?: string
+          next_due_date?: string | null
+          notes?: string | null
+          payment_method_note?: string | null
+          status?: string
+          topup_every_days?: number | null
+          type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      notifications: {
+        Row: {
+          channel: string
+          created_at: string
+          id: string
+          item_id: string | null
+          message: string
+          read_at: string | null
+          scheduled_for: string | null
+          sent_at: string | null
+          user_id: string
+        }
+        Insert: {
+          channel?: string
+          created_at?: string
+          id?: string
+          item_id?: string | null
+          message: string
+          read_at?: string | null
+          scheduled_for?: string | null
+          sent_at?: string | null
+          user_id?: string
+        }
+        Update: {
+          channel?: string
+          created_at?: string
+          id?: string
+          item_id?: string | null
+          message?: string
+          read_at?: string | null
+          scheduled_for?: string | null
+          sent_at?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notifications_item_id_fkey"
+            columns: ["item_id"]
+            isOneToOne: false
+            referencedRelation: "items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      price_history: {
+        Row: {
+          changed_at: string
+          id: string
+          item_id: string
+          new_amount: number
+          old_amount: number
+          user_id: string
+        }
+        Insert: {
+          changed_at?: string
+          id?: string
+          item_id: string
+          new_amount: number
+          old_amount: number
+          user_id?: string
+        }
+        Update: {
+          changed_at?: string
+          id?: string
+          item_id?: string
+          new_amount?: number
+          old_amount?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "price_history_item_id_fkey"
+            columns: ["item_id"]
+            isOneToOne: false
+            referencedRelation: "items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          country: string | null
+          created_at: string
+          currency: string
+          full_name: string | null
+          fx_rates: Json
+          id: string
+          notification_prefs: Json
+          onboarded: boolean
+          plan: string
+        }
+        Insert: {
+          country?: string | null
+          created_at?: string
+          currency?: string
+          full_name?: string | null
+          fx_rates?: Json
+          id: string
+          notification_prefs?: Json
+          onboarded?: boolean
+          plan?: string
+        }
+        Update: {
+          country?: string | null
+          created_at?: string
+          currency?: string
+          full_name?: string | null
+          fx_rates?: Json
+          id?: string
+          notification_prefs?: Json
+          onboarded?: boolean
+          plan?: string
+        }
+        Relationships: []
+      }
+      reports: {
+        Row: {
+          created_at: string
+          id: string
+          month: string
+          summary: Json
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          month: string
+          summary?: Json
+          user_id?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          month?: string
+          summary?: Json
+          user_id?: string
+        }
+        Relationships: []
+      }
+      savings_actions: {
+        Row: {
+          action_type: string
+          confirmed: boolean
+          created_at: string
+          estimated_monthly_saving: number
+          id: string
+          is_demo: boolean
+          item_id: string | null
+          user_id: string
+        }
+        Insert: {
+          action_type: string
+          confirmed?: boolean
+          created_at?: string
+          estimated_monthly_saving?: number
+          id?: string
+          is_demo?: boolean
+          item_id?: string | null
+          user_id?: string
+        }
+        Update: {
+          action_type?: string
+          confirmed?: boolean
+          created_at?: string
+          estimated_monthly_saving?: number
+          id?: string
+          is_demo?: boolean
+          item_id?: string | null
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "savings_actions_item_id_fkey"
+            columns: ["item_id"]
+            isOneToOne: false
+            referencedRelation: "items"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      savings_goals: {
+        Row: {
+          created_at: string
+          id: string
+          saved_amount: number
+          target_amount: number
+          target_date: string | null
+          title: string
+          type: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          saved_amount?: number
+          target_amount?: number
+          target_date?: string | null
+          title: string
+          type?: string
+          user_id?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          saved_amount?: number
+          target_amount?: number
+          target_date?: string | null
+          title?: string
+          type?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
