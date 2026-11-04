@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Logo } from "@/components/billwise/Logo";
 
 export const Route = createFileRoute("/auth")({
-  validateSearch: (s: Record<string, unknown>) => ({ mode: s.mode === "signin" ? ("signin" as const) : undefined }),
+  validateSearch: (s: Record<string, unknown>): { mode?: "signin" | undefined } => (s["mode"] === "signin" ? { mode: "signin" } : {}),
   head: () => ({
     meta: [
       { title: "Sign in — Billwise" },

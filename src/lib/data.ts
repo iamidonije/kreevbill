@@ -89,12 +89,12 @@ export type ItemInput = Partial<Omit<BillItem, "id" | "created_at">>;
 export function useSaveItem() {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: async ({ id, values }: { id?: string; values: ItemInput }) => {
+    mutationFn: async ({ id, values }: { id?: string | undefined; values: ItemInput | Record<string, unknown> }) => {
       if (id) {
         const { error } = await supabase.from("items").update(values as never).eq("id", id);
         if (error) throw error;
       } else {
-        const { error } = await supabase.from("items").insert({ ...(values as never), user_id: await uid() });
+        const { error } = await supabase.from("items").insert({ ...(values as Record<string, unknown>), user_id: await uid() });
         if (error) throw error;
       }
     },
@@ -136,8 +136,8 @@ export async function seedDemo() {
   const gym = items?.find((i) => i.name === "Gym membership");
   const dstv = items?.find((i) => i.name === "DSTV Compact");
   await supabase.from("savings_actions").insert([
-    { user_id, item_id: dstv?.id, action_type: "downgrade", estimated_monthly_saving: 6000, confirmed: true, is_demo: true },
-    { user_id, item_id: gym?.id, action_type: "negotiate", estimated_monthly_saving: 5000, confirmed: false, is_demo: true },
+    { user_id, item_id: dstv?.id ?? null, action_type: "downgrade", estimated_monthly_saving: 6000, confirmed: true, is_demo: true },
+    { user_id, item_id: gym?.id ?? null, action_type: "negotiate", estimated_monthly_saving: 5000, confirmed: false, is_demo: true },
   ]);
 }
 
