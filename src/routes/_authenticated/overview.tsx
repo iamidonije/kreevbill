@@ -154,7 +154,7 @@ function Overview() {
   );
 }
 
-function Stat({ label: l, value, sub, tone }: { label: string; value: string; sub?: string; tone?: "warn" | "good" }) {
+function Stat({ label: l, value, sub, tone }: { label: string; value: string; sub?: string; tone?: "warn" | "good" | undefined }) {
   const c = tone === "warn" ? "text-warning" : tone === "good" ? "text-success" : "text-foreground";
   return (
     <div className="rounded-3xl bg-card p-4 shadow-card">

@@ -16,7 +16,7 @@ const GUIDES: Record<string, string[]> = {
 export function cancelGuide(name: string): string[] {
   const n = name.toLowerCase();
   const key = Object.keys(GUIDES).find((k) => n.includes(k));
-  return key ? GUIDES[key] : [
+  return key && GUIDES[key] ? GUIDES[key] : [
     "Log in to the provider's website or app.",
     "Look for Account, Billing or Subscription settings.",
     "Turn off auto-renewal or choose Cancel.",

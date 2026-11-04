@@ -30,7 +30,7 @@ export const PRESETS: Preset[] = [
 ];
 
 export function avatarHue(name: string) {
-  const p = PRESETS.find((x) => name.toLowerCase().startsWith(x.name.toLowerCase().split(" ")[0]));
+  const p = PRESETS.find((x) => name.toLowerCase().startsWith(x.name.toLowerCase().split(" ")[0] ?? ""));
   if (p) return p.hue;
   let h = 0;
   for (const c of name) h = (h * 31 + c.charCodeAt(0)) % 360;
