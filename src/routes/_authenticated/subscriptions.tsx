@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { Plus, Repeat, Search } from "lucide-react";
+import { Download, Plus, Repeat, Search } from "lucide-react";
+import { downloadCsv } from "@/lib/export";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -45,7 +46,10 @@ function Subscriptions() {
           <h1 className="font-display text-2xl font-bold lg:text-3xl">Subscriptions</h1>
           <p className="text-sm text-muted-foreground">{list.length} shown · <span className="num">{formatMoney(totalMonthly(list, cur, fx), cur)}</span>/month</p>
         </div>
-        <Button onClick={() => setAdding(true)} className="rounded-full" size="sm"><Plus className="h-4 w-4" />Add</Button>
+        <div className="flex gap-2">
+          <Button variant="outline" size="sm" className="rounded-full" disabled={!list.length} onClick={() => downloadCsv(list, `billwise-subscriptions-${new Date().toISOString().slice(0, 10)}.csv`)}><Download className="h-4 w-4" />CSV</Button>
+          <Button onClick={() => setAdding(true)} className="rounded-full" size="sm"><Plus className="h-4 w-4" />Add</Button>
+        </div>
       </header>
 
       <div className="relative">

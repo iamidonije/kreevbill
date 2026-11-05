@@ -12,10 +12,12 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedAdvisorRouteImport } from './routes/_authenticated/advisor'
 import { Route as AuthenticatedBillsRouteImport } from './routes/_authenticated/bills'
 import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authenticated/onboarding'
 import { Route as AuthenticatedOverviewRouteImport } from './routes/_authenticated/overview'
 import { Route as AuthenticatedSubscriptionsRouteImport } from './routes/_authenticated/subscriptions'
+import { Route as ApiAdvisorRouteImport } from './routes/api/advisor'
 import { Route as AuthenticatedSubscriptionsIdRouteImport } from './routes/_authenticated/subscriptions_.$id'
 
 const IndexRoute = IndexRouteImport.update({
@@ -31,6 +33,11 @@ const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
   getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedAdvisorRoute = AuthenticatedAdvisorRouteImport.update({
+  id: '/advisor',
+  path: '/advisor',
+  getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedBillsRoute = AuthenticatedBillsRouteImport.update({
   id: '/bills',
@@ -53,6 +60,11 @@ const AuthenticatedSubscriptionsRoute =
     path: '/subscriptions',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const ApiAdvisorRoute = ApiAdvisorRouteImport.update({
+  id: '/api/advisor',
+  path: '/api/advisor',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedSubscriptionsIdRoute =
   AuthenticatedSubscriptionsIdRouteImport.update({
     id: '/subscriptions_/$id',
@@ -63,19 +75,23 @@ const AuthenticatedSubscriptionsIdRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/advisor': typeof AuthenticatedAdvisorRoute
   '/bills': typeof AuthenticatedBillsRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
   '/overview': typeof AuthenticatedOverviewRoute
   '/subscriptions': typeof AuthenticatedSubscriptionsRoute
+  '/api/advisor': typeof ApiAdvisorRoute
   '/subscriptions/$id': typeof AuthenticatedSubscriptionsIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/advisor': typeof AuthenticatedAdvisorRoute
   '/bills': typeof AuthenticatedBillsRoute
   '/onboarding': typeof AuthenticatedOnboardingRoute
   '/overview': typeof AuthenticatedOverviewRoute
   '/subscriptions': typeof AuthenticatedSubscriptionsRoute
+  '/api/advisor': typeof ApiAdvisorRoute
   '/subscriptions/$id': typeof AuthenticatedSubscriptionsIdRoute
 }
 export interface FileRoutesById {
@@ -83,10 +99,12 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/_authenticated/advisor': typeof AuthenticatedAdvisorRoute
   '/_authenticated/bills': typeof AuthenticatedBillsRoute
   '/_authenticated/onboarding': typeof AuthenticatedOnboardingRoute
   '/_authenticated/overview': typeof AuthenticatedOverviewRoute
   '/_authenticated/subscriptions': typeof AuthenticatedSubscriptionsRoute
+  '/api/advisor': typeof ApiAdvisorRoute
   '/_authenticated/subscriptions_/$id': typeof AuthenticatedSubscriptionsIdRoute
 }
 export interface FileRouteTypes {
@@ -94,29 +112,35 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/advisor'
     | '/bills'
     | '/onboarding'
     | '/overview'
     | '/subscriptions'
+    | '/api/advisor'
     | '/subscriptions/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
+    | '/advisor'
     | '/bills'
     | '/onboarding'
     | '/overview'
     | '/subscriptions'
+    | '/api/advisor'
     | '/subscriptions/$id'
   id:
     | '__root__'
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/_authenticated/advisor'
     | '/_authenticated/bills'
     | '/_authenticated/onboarding'
     | '/_authenticated/overview'
     | '/_authenticated/subscriptions'
+    | '/api/advisor'
     | '/_authenticated/subscriptions_/$id'
   fileRoutesById: FileRoutesById
 }
@@ -124,6 +148,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
+  ApiAdvisorRoute: typeof ApiAdvisorRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -148,6 +173,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/advisor': {
+      id: '/_authenticated/advisor'
+      path: '/advisor'
+      fullPath: '/advisor'
+      preLoaderRoute: typeof AuthenticatedAdvisorRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/bills': {
       id: '/_authenticated/bills'
@@ -177,6 +209,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedSubscriptionsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/api/advisor': {
+      id: '/api/advisor'
+      path: '/api/advisor'
+      fullPath: '/api/advisor'
+      preLoaderRoute: typeof ApiAdvisorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/subscriptions_/$id': {
       id: '/_authenticated/subscriptions_/$id'
       path: '/subscriptions/$id'
@@ -188,6 +227,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdvisorRoute: typeof AuthenticatedAdvisorRoute
   AuthenticatedBillsRoute: typeof AuthenticatedBillsRoute
   AuthenticatedOnboardingRoute: typeof AuthenticatedOnboardingRoute
   AuthenticatedOverviewRoute: typeof AuthenticatedOverviewRoute
@@ -196,6 +236,7 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdvisorRoute: AuthenticatedAdvisorRoute,
   AuthenticatedBillsRoute: AuthenticatedBillsRoute,
   AuthenticatedOnboardingRoute: AuthenticatedOnboardingRoute,
   AuthenticatedOverviewRoute: AuthenticatedOverviewRoute,
@@ -210,6 +251,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
+  ApiAdvisorRoute: ApiAdvisorRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { CalendarClock, LayoutGrid, Repeat, LogOut, Database } from "lucide-react";
+import { CalendarClock, LayoutGrid, Repeat, LogOut, Database, Sparkles } from "lucide-react";
 import type { ReactNode } from "react";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
@@ -12,6 +12,7 @@ const NAV = [
   { to: "/overview", label: "Overview", icon: LayoutGrid },
   { to: "/subscriptions", label: "Subscriptions", icon: Repeat },
   { to: "/bills", label: "Bills", icon: CalendarClock },
+  { to: "/advisor", label: "Advisor", icon: Sparkles },
 ] as const;
 
 export function DemoToggle({ compact = false }: { compact?: boolean }) {
@@ -58,7 +59,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       </aside>
       <main className="mx-auto w-full max-w-5xl flex-1 px-5 pb-28 pt-6 lg:px-10 lg:pb-12 lg:pt-10">{children}</main>
       <nav className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-card/95 pb-[env(safe-area-inset-bottom)] backdrop-blur lg:hidden">
-        <div className="mx-auto grid max-w-md grid-cols-3">
+        <div className="mx-auto grid max-w-md grid-cols-4">
           {NAV.map(({ to, label, icon: Icon }) => (
             <Link key={to} to={to} className="flex flex-col items-center gap-1 py-3 text-[11px] font-medium text-muted-foreground"
               activeProps={{ className: "!text-primary" }}>
