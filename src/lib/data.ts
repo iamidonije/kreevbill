@@ -94,7 +94,7 @@ export function useSaveItem() {
         const { error } = await supabase.from("items").update(values as never).eq("id", id);
         if (error) throw error;
       } else {
-        const { error } = await supabase.from("items").insert({ ...(values as Record<string, unknown>), user_id: await uid() });
+        const { error } = await supabase.from("items").insert({ ...(values as Record<string, unknown>), user_id: await uid() } as never);
         if (error) throw error;
       }
     },
