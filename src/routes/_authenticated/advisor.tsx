@@ -40,7 +40,7 @@ function Advisor() {
     setBusy(true);
     const ctrl = new AbortController();
     abortRef.current = ctrl;
-    const setLast = (fn: (m: Msg) => Msg) => setMsgs((all) => [...all.slice(0, -1), fn(all[all.length - 1])]);
+    const setLast = (fn: (m: Msg) => Msg) => setMsgs((all) => [...all.slice(0, -1), fn(all[all.length - 1]!)]);
     try {
       const { data } = await supabase.auth.getSession();
       const res = await fetch("/api/advisor", {
