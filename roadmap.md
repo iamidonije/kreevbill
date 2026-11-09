@@ -1,5 +1,5 @@
 # Roadmap
 - [x] Advisor bold/markdown rendering
 - [x] Test CSV exports (subscriptions, bills)
-- [ ] AI chatbot for general user queries (waiting on history choices)
-- [ ] Collect payments from customers (waiting on pricing details and plan)
+- [ ] "Ask Billwise" chatbot: separate conversations saved to account, then publish
+- [ ] Payments (skipped by user for now)
