@@ -4,6 +4,7 @@ import { Send, Sparkles, Square } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
+import { RichText } from "@/components/billwise/RichText";
 
 export const Route = createFileRoute("/_authenticated/advisor")({
   head: () => ({ meta: [
@@ -92,8 +93,8 @@ function Advisor() {
         )}
         {msgs.map((m, i) => (
           <div key={i} className={m.role === "user" ? "flex justify-end" : "flex justify-start"}>
-            <div className={`max-w-[85%] whitespace-pre-wrap rounded-3xl px-4 py-3 text-sm ${m.role === "user" ? "bg-primary text-primary-foreground" : m.error ? "bg-destructive/10 text-destructive" : "bg-card shadow-card"}`}>
-              {m.content || (busy && i === msgs.length - 1 ? <span className="animate-pulse text-muted-foreground">Thinking…</span> : null)}
+            <div className={`max-w-[85%] ${m.role === "user" || m.error ? "whitespace-pre-wrap" : ""} rounded-3xl px-4 py-3 text-sm ${m.role === "user" ? "bg-primary text-primary-foreground" : m.error ? "bg-destructive/10 text-destructive" : "bg-card shadow-card"}`}>
+              {m.content ? (m.role === "assistant" && !m.error ? <RichText text={m.content} /> : m.content) : (busy && i === msgs.length - 1 ? <span className="animate-pulse text-muted-foreground">Thinking…</span> : null)}
             </div>
           </div>
         ))}
