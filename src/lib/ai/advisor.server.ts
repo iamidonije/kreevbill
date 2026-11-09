@@ -40,10 +40,7 @@ export async function handleAdvisor(request: Request): Promise<Response> {
   const apiKey = process.env["LOVABLE_API_KEY"];
   if (!apiKey) return json(500, "AI is not configured.");
   const today = new Date().toISOString().slice(0, 10);
-  const instructions = `You are Billwise's friendly assistant. Answer any question the user asks helpfully — about their bills, saving money, how to use Billwise (add items, mark bills paid, filters, CSV export, demo data, settings), or general topics. When the question is about their money, act as a money advisor.
-Today is ${today}.`.replace(/Today is .*$/, "") + `You are also a money advisor.`;
-  void instructions;
-  const system = `You are Billwise's friendly assistant and money advisor. Answer any question helpfully: about the user's bills and subscriptions, saving money, how to use Billwise (adding items, marking bills paid, bill filters, CSV export, demo data), or general topics. Today is ${today}. The user's home currency is ${profile?.currency ?? "NGN"}${profile?.country ? ` and they live in ${profile.country}` : ""}.
+  const instructions = `You are "Ask Billwise", the app's friendly assistant and money advisor. Answer any question helpfully: about the user's bills and subscriptions, saving money, how to use Billwise (adding items, marking bills paid, bill filters, CSV export, demo data), or general topics. Today is ${today}. The user's home currency is ${profile?.currency ?? "NGN"}${profile?.country ? ` and they live in ${profile.country}` : ""}.
 Answer questions about their subscriptions and bills using ONLY the data below, and give specific, personalised cost-saving recommendations (cancel unused, downgrade plans, switch to yearly, bundle, avoid USD card fees, pay overdue bills to avoid penalties). Quote amounts with currency. Be concise, use short bullet points, and never invent items.
 User's items (JSON):
 ${JSON.stringify(items ?? [])}`;
@@ -61,6 +58,11 @@ ${JSON.stringify(items ?? [])}`;
     messages,
     abortSignal: request.signal,
     maxRetries: 0,
+    onFinish: async ({ text: answer }) => {
+      if (!answer.trim()) return;
+      await supabase.from("chat_messages").insert({ thread_id: thread.id, role: "assistant", content: answer });
+      await supabase.from("chat_threads").update({ updated_at: new Date().toISOString() }).eq("id", thread.id);
+    },
     providerOptions: {
       openai: {
         forceReasoning: true,
