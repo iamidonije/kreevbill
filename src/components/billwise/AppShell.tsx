@@ -12,7 +12,7 @@ const NAV = [
   { to: "/overview", label: "Overview", icon: LayoutGrid },
   { to: "/subscriptions", label: "Subscriptions", icon: Repeat },
   { to: "/bills", label: "Bills", icon: CalendarClock },
-  { to: "/advisor", label: "Advisor", icon: Sparkles },
+  { to: "/advisor", label: "Ask Billwise", icon: Sparkles },
 ] as const;
 
 export function DemoToggle({ compact = false }: { compact?: boolean }) {
