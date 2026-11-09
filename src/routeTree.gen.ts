@@ -18,6 +18,7 @@ import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authentic
 import { Route as AuthenticatedOverviewRouteImport } from './routes/_authenticated/overview'
 import { Route as AuthenticatedSubscriptionsRouteImport } from './routes/_authenticated/subscriptions'
 import { Route as ApiAdvisorRouteImport } from './routes/api/advisor'
+import { Route as AuthenticatedAdvisorThreadIdRouteImport } from './routes/_authenticated/advisor_.$threadId'
 import { Route as AuthenticatedSubscriptionsIdRouteImport } from './routes/_authenticated/subscriptions_.$id'
 
 const IndexRoute = IndexRouteImport.update({
@@ -65,6 +66,12 @@ const ApiAdvisorRoute = ApiAdvisorRouteImport.update({
   path: '/api/advisor',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAdvisorThreadIdRoute =
+  AuthenticatedAdvisorThreadIdRouteImport.update({
+    id: '/advisor_/$threadId',
+    path: '/advisor/$threadId',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 const AuthenticatedSubscriptionsIdRoute =
   AuthenticatedSubscriptionsIdRouteImport.update({
     id: '/subscriptions_/$id',
@@ -81,6 +88,7 @@ export interface FileRoutesByFullPath {
   '/overview': typeof AuthenticatedOverviewRoute
   '/subscriptions': typeof AuthenticatedSubscriptionsRoute
   '/api/advisor': typeof ApiAdvisorRoute
+  '/advisor/$threadId': typeof AuthenticatedAdvisorThreadIdRoute
   '/subscriptions/$id': typeof AuthenticatedSubscriptionsIdRoute
 }
 export interface FileRoutesByTo {
@@ -92,6 +100,7 @@ export interface FileRoutesByTo {
   '/overview': typeof AuthenticatedOverviewRoute
   '/subscriptions': typeof AuthenticatedSubscriptionsRoute
   '/api/advisor': typeof ApiAdvisorRoute
+  '/advisor/$threadId': typeof AuthenticatedAdvisorThreadIdRoute
   '/subscriptions/$id': typeof AuthenticatedSubscriptionsIdRoute
 }
 export interface FileRoutesById {
@@ -105,6 +114,7 @@ export interface FileRoutesById {
   '/_authenticated/overview': typeof AuthenticatedOverviewRoute
   '/_authenticated/subscriptions': typeof AuthenticatedSubscriptionsRoute
   '/api/advisor': typeof ApiAdvisorRoute
+  '/_authenticated/advisor_/$threadId': typeof AuthenticatedAdvisorThreadIdRoute
   '/_authenticated/subscriptions_/$id': typeof AuthenticatedSubscriptionsIdRoute
 }
 export interface FileRouteTypes {
@@ -118,6 +128,7 @@ export interface FileRouteTypes {
     | '/overview'
     | '/subscriptions'
     | '/api/advisor'
+    | '/advisor/$threadId'
     | '/subscriptions/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -129,6 +140,7 @@ export interface FileRouteTypes {
     | '/overview'
     | '/subscriptions'
     | '/api/advisor'
+    | '/advisor/$threadId'
     | '/subscriptions/$id'
   id:
     | '__root__'
@@ -141,6 +153,7 @@ export interface FileRouteTypes {
     | '/_authenticated/overview'
     | '/_authenticated/subscriptions'
     | '/api/advisor'
+    | '/_authenticated/advisor_/$threadId'
     | '/_authenticated/subscriptions_/$id'
   fileRoutesById: FileRoutesById
 }
@@ -216,6 +229,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAdvisorRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/advisor_/$threadId': {
+      id: '/_authenticated/advisor_/$threadId'
+      path: '/advisor/$threadId'
+      fullPath: '/advisor/$threadId'
+      preLoaderRoute: typeof AuthenticatedAdvisorThreadIdRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/subscriptions_/$id': {
       id: '/_authenticated/subscriptions_/$id'
       path: '/subscriptions/$id'
@@ -232,6 +252,7 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedOnboardingRoute: typeof AuthenticatedOnboardingRoute
   AuthenticatedOverviewRoute: typeof AuthenticatedOverviewRoute
   AuthenticatedSubscriptionsRoute: typeof AuthenticatedSubscriptionsRoute
+  AuthenticatedAdvisorThreadIdRoute: typeof AuthenticatedAdvisorThreadIdRoute
   AuthenticatedSubscriptionsIdRoute: typeof AuthenticatedSubscriptionsIdRoute
 }
 
@@ -241,6 +262,7 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedOnboardingRoute: AuthenticatedOnboardingRoute,
   AuthenticatedOverviewRoute: AuthenticatedOverviewRoute,
   AuthenticatedSubscriptionsRoute: AuthenticatedSubscriptionsRoute,
+  AuthenticatedAdvisorThreadIdRoute: AuthenticatedAdvisorThreadIdRoute,
   AuthenticatedSubscriptionsIdRoute: AuthenticatedSubscriptionsIdRoute,
 }
 
