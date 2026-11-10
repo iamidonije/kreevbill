@@ -8,3 +8,4 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+- Chat history: server route saves user + assistant messages per thread (RLS-scoped); thread pages live at /advisor/$threadId so reloads restore history.
