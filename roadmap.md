@@ -1,5 +1,5 @@
 # Roadmap
 - [x] Advisor bold/markdown rendering
 - [x] Test CSV exports (subscriptions, bills)
-- [ ] "Ask Billwise" chatbot: separate conversations saved to account, then publish
+- [x] "Ask Billwise" chatbot with saved separate conversations
 - [ ] Payments (skipped by user for now)
