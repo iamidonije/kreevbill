@@ -144,10 +144,10 @@ function Overview() {
         </>
       )}
 
-      <button onClick={() => toast("Ask Billwise is coming soon", { description: "Your AI savings assistant arrives in the next update." })}
+      <Link to="/advisor" aria-label="Ask Billwise, your AI savings assistant"
         className="fixed bottom-24 right-5 z-30 flex items-center gap-2 rounded-full bg-primary px-5 py-3.5 text-sm font-semibold text-primary-foreground shadow-float lg:bottom-8 lg:right-8">
         <MessageCircle className="h-5 w-5" />Ask Billwise<Sparkle className="h-3.5 w-3.5 opacity-70" />
-      </button>
+      </Link>
 
       <ItemForm open={adding} onOpenChange={setAdding} />
     </div>
